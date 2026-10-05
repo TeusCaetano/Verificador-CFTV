@@ -1,0 +1,3 @@
+Falha ou resposta inválida da API de estado agora retoma teste RTSP automaticamente, explicitando origem no diagnóstico. Estado Connecting válido continua inconclusivo. Canais ausentes da resposta também usam RTSP. Configuração nova habilitada só é salva após resposta reconhecida para o canal; configuração anterior preservada se inválida. Porta/firmware corretos ainda necessários para confirmar câmera real pelo gravador; RTSP sozinho não garante imagem útil.
+Atualize pasta original preservando .env: docker compose up -d --build e Ctrl+F5. Configurações antigas inválidas não precisam ser apagadas: fallback automático.
+Testes: API reconhecida, numeração, offline vencido, fallback RTSP em API inválida, rejeição de configuração inválida sem alterar configuração anterior.

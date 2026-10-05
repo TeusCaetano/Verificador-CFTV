@@ -1,0 +1,1 @@
+Ícone SVG de volume com estado silenciado/ativo. Indicador circular do status: verde online, vermelho offline, cinza não verificada. Janela elevada 24px para não sobrepor créditos da cartografia. Mantém o player e demais funcionalidades. Conversão automática não implementada neste pacote.

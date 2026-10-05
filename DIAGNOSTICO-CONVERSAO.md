@@ -1,0 +1,2 @@
+Atualização de diagnóstico: FFmpeg usa timeout RTSP, erros classificados são registrados sem URLs/credenciais. Player exibe falhas conhecidas do conversor. Mantém layout e conversão sob demanda.
+Copie conteúdo na pasta original preservando .env, execute docker compose up -d --build e docker compose restart video, depois Ctrl+F5. Tente abrir e envie docker compose logs --since=3m video app se falhar. A causa no parque ainda depende deste diagnóstico.

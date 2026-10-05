@@ -1,0 +1,2 @@
+Janela reproduzida conforme print: 450px, cabeçalho azul escuro de 28px, controles áudio/reproduzir/fechar, vídeo 16:9 preto, rodapé branco de 74px com grupos (unidade e setor cadastrados), ID e coordenadas. Sem informações técnicas adicionais nem editar no rodapé. Duplo clique no vídeo abre tela cheia. Não altera gateway ou codec.
+Atualização: copiar sobre pasta original preservando .env, docker compose up -d --build, Ctrl+F5.

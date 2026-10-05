@@ -1,0 +1,206 @@
+SUPORTE A VISUALIZACAO MJPEG
+Leia MJPEG-VISUALIZACAO.md. Atualize somente a pasta backend e recrie somente o app. Preserve .env, banco e backups.
+
+DETECCAO HIKVISION E INTELBRAS
+Leia HIKVISION-DETECCAO.md para atualizar somente o aplicativo e testar a consulta de canais pela porta web. Preserve .env, banco e backups.
+
+REPARO DA TELA VAZIA
+Leia primeiro CORRECAO-INICIALIZACAO.md. Os cadastros continuam no banco; aplique somente a pasta frontend e recrie somente o app.
+
+ATUALIZACAO ESTRUTURAL
+Leia primeiro CORRECOES-ESTRUTURA.md para atualizar na pasta original e preservar o .env e o banco.
+
+AGRUPAMENTO DAS CAMERAS NO MAPA
+Balao azul com numero representa a quantidade de cameras visiveis no grupo.
+Exemplo: 2 = duas cameras proximas. Ao aproximar, grupos se separam e mostram
+os baloes individuais com icone de camera; cores seguem o status do canal.
+Clique no numero para aproximar. No zoom maximo, clique para expandir cameras
+sobrepostas ao redor do grupo, com linhas ate as posicoes reais.
+A expansao e SOMENTE visual: nao altera latitude/longitude salvas.
+Ao mudar zoom ou clicar fora, a expansao se recolhe.
+Contagem respeita filtros (incluindo Somente online e Canal livre).
+Modo Ruas/Satelite, posicionamento e selecao de setores continuam disponiveis.
+Sem nova dependencia externa para agrupamento. Usa o Leaflet ja existente.
+
+CORRECAO DO ZOOM SATELITE
+Nivel nativo padrao agora 16; zoom ate 21 amplia a imagem desse nivel,
+em vez de solicitar imagens mais detalhadas sem cobertura.
+Isso evita o cinza "Map data not yet available" ao aproximar em areas onde
+nivel 16 existe mas niveis 17/18/19 nao estao disponiveis.
+Controle Detalhe permite experimentar 17/18/19. Se surgir cinza, volte a
+Compativel (16). Disponibilidade real deve ser conferida no navegador local.
+Nao acrescenta resolucao a imagem original. Posicoes salvas nao sao alteradas.
+
+MAPA SATELITE E POSICIONAMENTO
+Mapa operacional tem Satelite (Esri World Imagery) e Ruas (OpenStreetMap).
+A escolha da camada e guardada neste navegador. Imagens exigem internet;
+resolucao, data de captura e cobertura dependem do provedor. Nao sao imagens
+ao vivo. Zoom extra pode ampliar pixels existentes, nao acrescenta detalhe.
+Creditos dos provedores permanecem no mapa.
+
+COMO DISTRIBUIR AS CAMERAS
+1. Abra Mapa operacional e escolha Satelite.
+2. Selecione a unidade na lateral e clique Centralizar.
+3. Clique Posicionar cameras. Escolha o canal na lista do painel.
+   Isso permite selecionar canais mesmo quando os baloes estao sobrepostos.
+4. Clique no ponto correto no mapa ou arraste o balao AZUL de previa.
+5. Selecione o setor ja cadastrado e clique Salvar posicao.
+6. Repita para os outros canais. Fechar antes de salvar descarta a previa.
+Use Nomes para mostrar nomes de canais e setores junto aos baloes.
+O painel tambem permite digitar latitude/longitude e clicar Ver camera.
+Canais livres podem ser posicionados quando o filtro Somente online esta
+DESMARCADO. Eles continuam livres; mover nao reativa monitoramento.
+Salvar coordenadas exige perfil admin. Nao muda senha, status, alertas nem
+fila de monitoramento. Cada salvamento fica registrado na auditoria.
+Setores sao atribuicoes manuais; esta entrega nao desenha limites de setores
+nem identifica automaticamente portarias/armazens na imagem.
+Esta entrega preserva cadastro em lote, filtros e Canal livre da etapa 8.
+Importacao especifica Sigma Nome/Descricao continua pendente.
+
+ATUALIZACAO — CANAL LIVRE
+A caixa Canal livre aparece na lista Dispositivos e no formulario Editar.
+Marque CAM14, CAM15 e CAM16 somente se esses canais estiverem livres.
+Ao marcar: preserva cadastro e credenciais; suspende testes automaticos,
+alertas e video; encerra alertas ativos. Mostra Canal livre em cor neutra.
+Ao desmarcar: reativa o monitoramento e aguarda nova verificacao.
+Alteracao exige perfil admin e fica registrada como atualizacao na auditoria.
+No cadastro em lote, selecione os canais livres pelas caixas abaixo dos dados.
+Dashboard separa livres de offline. Relatorio de disponibilidade exclui os
+canais ATUALMENTE livres; nao apaga observacoes nem eventos anteriores.
+Nenhum canal existente e marcado livre automaticamente ao atualizar.
+Depois da atualizacao, marque manualmente os tres canais que voce indicou.
+Esta entrega nao adiciona a importacao do formato Sigma Nome/Descricao.
+
+ETAPA 8 — CADASTRO EM LOTE E ORGANIZACAO DO PARQUE
+Acesso: http://127.0.0.1:8083
+
+ATUALIZAR
+1. Extraia em pasta separada.
+2. Copie o CONTEUDO de scheffer-etapa-8-mapa-grupos para a pasta ORIGINAL do sistema,
+   preservando .env e substituindo os arquivos.
+3. Na pasta original execute:
+   powershell -ExecutionPolicy Bypass -File .\configurar.ps1
+   docker compose up -d --build
+4. Abra http://127.0.0.1:8083 e pressione Ctrl+F5. Entre novamente.
+Novas tabelas sao criadas automaticamente; a camera existente, credenciais,
+historico, alertas e manutencoes permanecem. Nao altere o nome do projeto.
+Nao use docker compose down -v. Guarde .env com o backup do banco.
+
+O QUE MUDA
+Dispositivos tem Unidades e setores, Importar planilha e Canais do gravador.
+Cadastro individual tem unidade, setor e nome do gravador.
+Filtros: unidade, setor, gravador, fabricante, status e manutencao, alem da
+busca por nome/IP/modelo/local. Lista paginada em 50 dispositivos.
+Filtros aplicam-se a lista, arvore e marcadores do mapa. Contadores e graficos
+do dashboard seguem globais; filtros historicos existentes seguem disponiveis.
+Escolha a unidade na lateral e clique Centralizar no mapa para o seu centro.
+A camera existente permanece em Tres Lagoas, sem setor. Edite para organizar.
+
+UNIDADES E SETORES
+Em Dispositivos > Unidades e setores, cadastre nome e centro da unidade.
+Cadastre setores na unidade: Portaria, Armazem etc. Setor e opcional.
+Cadastro organizacional e de dispositivos exige perfil admin.
+Operator/viewer consultam. Tratamento/manutencao da etapa 7 permanece
+liberado a admin/operator. Nesta entrega unidades/setores sao criados;
+a interface ainda nao oferece edicao/exclusao dessas estruturas.
+
+VARIOS CANAIS DO GRAVADOR
+1. Abra Canais do gravador.
+2. Informe nome do gravador, prefixo, modelo, fabricante, IP, porta RTSP,
+   unidade/setor, usuario/senha, stream e coordenadas.
+3. Canais: 1-16 ou 1,3,5-8 (1 a 256, sem repeticoes).
+4. Clique Validar canais, confira TODOS os itens e clique Salvar lote.
+Nomes: PREFIXO-CAM01, PREFIXO-CAM02 etc. Usa caminho padrao do fabricante.
+Senha e informada uma vez e armazenada criptografada em cada canal.
+Cada canal permanece um dispositivo independente para monitoramento,
+video e alertas. Nome do gravador e uma etiqueta para organizar o acesso
+por unidade/IP/porta; nao e descoberta automatica de canais nem ONVIF.
+Caminho RTSP personalizado deve ser cadastrado individualmente ou por planilha.
+Canais herdam coordenadas e setor; edite individualmente conforme o local real.
+
+IMPORTACAO CSV / EXCEL
+Baixe o modelo na propria tela Importar planilha. Formatos .csv e .xlsx;
+primeira aba Excel, ate 1.000 dispositivos e 2 MB por lote.
+CSV UTF-8 ou Windows-1252, separado por ponto e virgula, virgula ou tabulacao.
+Cabecalhos do modelo nao devem ser alterados. Nao use formulas.
+Obrigatorios: nome, fabricante (Intelbras/Hikvision), ip, porta, canal.
+Opcionais: modelo, tipo (nvr/camera), unidade, setor, gravador, latitude,
+longitude, usuario, senha, stream (primary/secondary), caminho_rtsp.
+Unidade/setor podem ser nomes ou IDs existentes. Cadastre-os antes de importar.
+Unidade e setor vazios usam os padroes selecionados na tela.
+Sem coordenadas, usa o centro da unidade. Camera direta usa canal 1.
+Usuario/senha por linha prevalecem sobre os padroes da tela. Para evitar
+senhas na planilha, informe-as somente na tela. Para novos dispositivos,
+usuario e senha sao obrigatorios na validacao de lote.
+Clique Validar arquivo. Previa mostra nomes, canais, localizacao e erros,
+sem revelar credenciais. Nenhum cadastro e alterado durante a validacao.
+Corrija todos os erros antes de importar. A previa expira em 15 minutos;
+qualquer alteracao do formulario exige validar novamente.
+
+DUPLICADOS E CONSISTENCIA
+Chave: unidade + IP normalizado + porta RTSP + tipo de acesso + canal.
+Stream principal/secundario nao permite duplicar o mesmo canal.
+Mesmo endereco privado em unidades distintas e permitido para redes distintas.
+Duplicados no arquivo e cadastros existentes sao bloqueados. Importacao
+somente CRIA; nao sobrescreve nem atualiza cadastros existentes.
+Confirmacao verifica novamente e usa transacao unica: salva o lote inteiro
+ou nao salva nenhum item. Conflito entre previa e confirmacao exige revalidar.
+Duplicados eventualmente existentes antes da etapa 8 sao preservados, nunca
+apagados automaticamente; reorganize/remova os excedentes manualmente.
+Edicao de credenciais continua individual; alterar um canal nao altera os
+outros canais daquele gravador.
+
+VALIDAR NO PILOTO
+1. Confirme que a camera existente aparece e o video continua abrindo.
+2. Cadastre setor de teste e associe a camera existente por Editar.
+3. Valide um lote pequeno; canal ja cadastrado deve acusar duplicado.
+4. Baixe modelo CSV/Excel, preencha e confira a previa antes de importar.
+5. Confira filtros e paginacao. Nao cadastre canais inexistentes em producao.
+6. Teste de falha/recuperacao dos alertas da etapa 7 fica PENDENTE conforme
+   combinado; manutencao ja validada pelo operador na instalacao local.
+
+ESCALA
+Comece com poucos canais. Importar 1.000 linhas nao comprova capacidade de
+monitorar 1.000 cameras: fila/intervalo, rede, gravadores e carga do servidor
+precisam ser medidos e ajustados antes de expandir. Monitor padrao continua
+com 2 verificacoes simultaneas; video e sob demanda, sem gravacao continua.
+Limites historicos da etapa 6 continuam aplicaveis.
+
+COMO OS INDICADORES SAO CALCULADOS
+Cada teste grava uma observacao, inclusive quando o status nao muda.
+Resultado valido ate a proxima observacao ou max(180s, 3x intervalo), o que
+ocorrer primeiro. Depois disso, o tempo fica sem verificacao.
+Editar o cadastro corta a validade do resultado anterior e exige novo teste.
+Disponibilidade = tempo online / (tempo online + tempo offline) observado.
+Cobertura = tempo verificado / tempo total do periodo selecionado.
+Sem amostras: disponibilidade 'Sem dados' e cobertura 0%, nunca 100%.
+Os tempos representam estimativas entre sondagens, nao deteccao instantanea.
+Um episodio offline e um intervalo offline observado; lacunas podem separar
+intervalos. Isso nao e uma contagem garantida de todas as quedas fisicas.
+Online refere-se ao stream, nao confirma imagem util da camera no NVR.
+
+IMPORTANTE
+Coleta DETALHADA comeca na etapa 6. Eventos da etapa 5 continuam no Historico,
+mas nao foram convertidos artificialmente em amostras de disponibilidade.
+Por isso, ao instalar, a cobertura de 24h/7d/30d sera pequena. Ela cresce
+conforme o sistema verifica os canais. Periodos anteriores ficam sem dados.
+Relatorios consideram somente cameras ATUALMENTE cadastradas e elegiveis
+no filtro. Historico e auditoria de dispositivos removidos continuam salvos.
+Tempo offline total soma os tempos das cameras (camera-tempo); nao representa
+necessariamente a duracao unica de uma falha geral na unidade.
+
+VALIDAR
+1. Aguarde uma verificacao automatica e abra Dashboard.
+2. Confira disponibilidade, cobertura e dados na tabela.
+3. Alterne periodo, fabricante e camera.
+4. Dados podem comecar como Sem dados e aparecer apos o primeiro teste.
+5. Confirme que video e remocao continuam funcionando.
+
+ESCALA E ARMAZENAMENTO
+API limita o relatorio a 200.000 amostras para proteger memoria. Se exceder,
+solicita periodo menor ou filtro de camera. Nao trunca os dados silenciosamente.
+Esta entrega e para o piloto; agregacao em larga escala, paginacao/relatorios
+para todo o parque e politica de retencao das amostras ainda precisam evoluir.
+As amostras ocupam espaco e permanecem no banco; nao ha descarte automatico.
+Windows/VPN/PostgreSQL e desempenho com 1.000 cameras devem ser validados.
+Guarde .env com o backup; a chave CAMERA_KEY protege as credenciais.

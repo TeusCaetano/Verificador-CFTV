@@ -1,0 +1,2 @@
+Janela simples conforme referência: nome/status, vídeo, unidade, setor, ID e coordenadas. Reconectar, fechar e tela cheia do vídeo via API do navegador (Esc para sair). Se indisponível, amplia a janela. Edição continua em Dispositivos. Mantém demais funções e espera do player. H265 continua exigindo ajuste do stream para H264 na configuração atual.
+Instalação: copiar conteúdo sobre pasta original preservando .env, docker compose up -d --build, Ctrl+F5.

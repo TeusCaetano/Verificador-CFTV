@@ -1,0 +1,27 @@
+ETAPA 8 — VALIDACAO EXECUTADA
+Backend: migracao sem apagar dispositivos/credenciais, unidades/setores,
+cadastro individual, duplicados, escopo unidade/setor, lote com previa,
+confirmacao atomica com conflito posterior, isolamento de sessao e permissoes,
+CSV com acentos/aspas/ponto e virgula, Excel e modelos autenticados,
+remocao/reutilizacao de endereco, endpoints de dashboard e alertas.
+Regressao etapa 7: ciclo de alertas, manutencao, recorrencia e permissoes.
+Frontend: sintaxe, referencias DOM, inicializacao/renderizacao em simulacao,
+filtros, formulario de edicao e selecao de canais.
+Testes: python tests/test_inventory.py e python tests/test_alerts.py
+Validacao visual no navegador Windows e video/VPN reais devem ser executados
+no piloto. Teste de falha dos alertas em campo permanece pendente.
+
+CANAL LIVRE: testes de suspensao, recuperacao, alertas, bloqueio de video/teste,
+exclusao do relatorio, cadastro em lote e permissoes passaram.
+Execute python tests/test_free_channels.py para esse ciclo.
+
+MAPA: API de posicao/setor, preservacao de credenciais/status/observacoes,
+limites geograficos, setor de outra unidade, inexistente e permissao testados.
+Interface testada em simulacao DOM/Leaflet: inicializacao, Satelite/Ruas,
+selecao de camera, clique para previa, setor e descarte.
+Imagens reais no navegador Windows/VPN dependem de validacao local.
+
+GRUPOS: testes de proximidade, contagens, separacao por zoom, pontos identicos,
+filtros e 1.000 pontos. Simulacao Leaflet verifica balao numerado, clique para
+zoom, expansao no maximo, icones individuais e preservacao das coordenadas.
+Validacao visual no navegador do operador permanece necessaria.

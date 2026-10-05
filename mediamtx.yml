@@ -1,0 +1,24 @@
+logLevel: error
+api: yes
+apiAddress: :9997
+hls: yes
+hlsAddress: :8888
+hlsAlwaysRemux: no
+hlsVariant: mpegts
+hlsSegmentDuration: 1s
+hlsSegmentCount: 5
+webrtc: no
+rtmp: no
+srt: no
+rtsp: yes
+rtspAddress: :8554
+rtspTransports: [tcp]
+authInternalUsers:
+  - user: any
+    pass:
+    ips: []
+    permissions:
+      - action: api
+      - action: read
+      - action: publish
+paths: {}

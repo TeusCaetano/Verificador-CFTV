@@ -1,0 +1,42 @@
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: scheffer
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?Execute configurar.ps1 primeiro}
+      POSTGRES_DB: scheffer
+    volumes:
+      - database:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U scheffer -d scheffer"]
+      interval: 5s
+      timeout: 5s
+      retries: 15
+    restart: unless-stopped
+  app:
+    build: .
+    ports:
+      - "127.0.0.1:8083:8083"
+    environment:
+      DATABASE_URL: postgresql+psycopg://scheffer:${DB_PASSWORD}@db/scheffer
+      GOOGLE_MAPS_API_KEY: ${GOOGLE_MAPS_API_KEY:-}
+      TRANSCODE_MAX: ${TRANSCODE_MAX:-2}
+      MONITOR_ENABLED: "true"
+      MONITOR_INTERVAL: "60"
+      MONITOR_WORKERS: ${MONITOR_WORKERS:-16}
+      MONITOR_PER_RECORDER: ${MONITOR_PER_RECORDER:-2}
+      CAMERA_KEY: ${CAMERA_KEY:?Execute configurar.ps1 para gerar a chave}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:?Execute configurar.ps1 primeiro}
+    depends_on:
+      db:
+        condition: service_healthy
+      video:
+        condition: service_started
+    restart: unless-stopped
+  video:
+    image: bluenviron/mediamtx:1.21.1
+    volumes:
+      - ./mediamtx.yml:/mediamtx.yml:ro
+    restart: unless-stopped
+volumes:
+  database:

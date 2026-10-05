@@ -1,0 +1,2 @@
+Prévia convertida H265: até 640x360, 10fps, teto 600kbps, CRF30. Espera automática máxima reduzida para 45s. H264 segue direto e usa resolução/FPS do stream selecionado no gravador; para reduzir H264, configure o stream secundário no equipamento. A redução diminui custo de codificação mas não garante abertura rápida se a origem/VPN demora.
+Instalação: copiar sobre pasta original preservando .env, docker compose up -d --build, Ctrl+F5.
